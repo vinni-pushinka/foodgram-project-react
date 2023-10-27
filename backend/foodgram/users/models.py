@@ -17,15 +17,15 @@ class CustomUser(AbstractUser):
     )
 
     username = models.CharField(
-       max_length=150,
-       unique=True,
-       null=False,
-       verbose_name="Уникальный юзернейм",
-       validators=[
-           RegexValidator(
-               regex=r"^[\w.@+-]+",
-               message="Допустимые символы: буквы, цифры и @/./+/-",
-           )
+        max_length=150,
+        unique=True,
+        null=False,
+        verbose_name="Уникальный юзернейм",
+        validators=[
+            RegexValidator(
+                regex=r"^[\w.@+-]+",
+                message="Допустимые символы: буквы, цифры и @/./+/-",
+            )
         ],
     )
 

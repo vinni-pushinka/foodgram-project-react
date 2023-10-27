@@ -101,14 +101,14 @@ class RecipeCreateSerializer(serializers.ModelSerializer):
         many=True,
         queryset=Tag.objects.all()
     )
-    image = Base64ImageField(required=False, allow_null=True,  max_length=None)
+    image = Base64ImageField(required=False, allow_null=True, max_length=None)
 
     class Meta:
         model = Recipe
         fields = (
             'id', 'author', 'name', 'cooking_time',
             'text', 'tags', 'ingredients', 'image',
-            )
+        )
 
     def add_ingredients(self, ingredients_data, instance):
         for ingredient_data in ingredients_data:

@@ -10,7 +10,7 @@ class RecipeFilter(django_filters.FilterSet):
         queryset=Tag.objects.all(),
         field_name='tags__slug',
         to_field_name='slug',
-        )
+    )
     is_favorited = django_filters.filters.NumberFilter(
         method='fav_filter')
     is_in_shopping_cart = django_filters.filters.NumberFilter(

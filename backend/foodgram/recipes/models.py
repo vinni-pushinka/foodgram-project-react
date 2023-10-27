@@ -27,12 +27,11 @@ class Recipe(models.Model):
         validators=[MinValueValidator(
             1,
             message='Время приготовления не может быть меньше минуты')
-            ]
+        ]
     )
     text = models.TextField()
     author = models.ForeignKey(
         CustomUser, on_delete=models.CASCADE, related_name='recipes')
-    #  добавила rel name
     ingredients = models.ManyToManyField(
         'Ingredient',
         through='RecipeIngredient'

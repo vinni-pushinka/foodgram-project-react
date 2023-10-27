@@ -58,7 +58,7 @@ class RecipeViewSet(ModelViewSet):
         detail=True,
         methods=["post", "delete"],
         permission_classes=(IsAuthenticated,)
-        )
+    )
     def favorite(self, request, pk):
         user = request.user
         recipe = get_object_or_404(Recipe, id=pk)
@@ -83,7 +83,7 @@ class RecipeViewSet(ModelViewSet):
         detail=True,
         methods=["post", "delete"],
         permission_classes=(IsAuthenticated,)
-        )
+    )
     def shopping_cart(self, request, pk):
         user = request.user
         recipe = get_object_or_404(Recipe, id=pk)
