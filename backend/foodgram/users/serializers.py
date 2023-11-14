@@ -1,10 +1,11 @@
 from rest_framework import serializers
 from rest_framework.serializers import SerializerMethodField
 
-from users.models import CustomUser, Follow
+from users.models import CustomUser
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
+    """Сериализатор для управления пользователем."""
     is_subscribed = SerializerMethodField(read_only=True)
 
     class Meta:
@@ -18,14 +19,13 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     def get_is_subscribed(self, obj):
         request = self.context.get('request')
-        if request:
-            return Follow.objects.filter(
-                user=request.user.id,
-                author=obj.id).exists()
+        if request and request.user.is_authenticated:
+            return obj.author.filter(user=request.user).exists()
         return False
 
 
 class CreateCustomUserSerializer(serializers.ModelSerializer):
+    """Сериализатор для создания пользователя."""
 
     class Meta:
         model = CustomUser

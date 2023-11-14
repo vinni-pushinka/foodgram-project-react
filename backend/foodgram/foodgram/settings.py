@@ -8,15 +8,30 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'nhu2HEtmpfSZbw0aO1lKA9vqGQT4sI!6CgX.MPy3')
+DEBUG = os.getenv('DEBUG').lower() == 'true'
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1').split(',')
 
-DEBUG = True
+if DEBUG is True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv(
+                'DB_ENGINE',
+                default='django.db.backends.postgresql'),
+            'NAME': os.getenv('DB_NAME', default='postgres'),
+            'USER': os.getenv('POSTGRES_USER', default='user'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='password'),
+            'HOST': os.getenv('DB_HOST', default='db'),
+            'PORT': os.getenv('DB_PORT', default='5432')
+        }
+    }
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'host.docker.internal',
-    'localhost',
-    'backend'
-]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -63,14 +78,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'foodgram.wsgi.application'
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -120,3 +127,6 @@ DJOSER = {
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+LOAD_DATA_DIR = os.path.join(BASE_DIR, 'data')
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240

@@ -11,21 +11,22 @@ from users.serializers import CreateCustomUserSerializer, CustomUserSerializer
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     """Вьюсет модели пользователей."""
-
     queryset = CustomUser.objects.all()
     permission_classes = (AllowAny, )
 
     def get_serializer_class(self):
+        """Определение подходящего сериализатора."""
         if self.action == 'create':
             return CreateCustomUserSerializer
         return CustomUserSerializer
 
     @action(
-        methods=["post", "delete"],
+        methods=['post', 'delete'],
         detail=True,
         permission_classes=(IsAuthenticated,),
     )
     def subscribe(self, request, pk):
+        """Создание или удаление подписки на автора."""
         user = self.request.user
         author = get_object_or_404(CustomUser, id=pk)
         data = {
@@ -49,6 +50,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         permission_classes=(IsAuthenticated,),
     )
     def subscriptions(self, request):
+        """Получение списка авторов, на которых подписан пользователь."""
         user = request.user
         subscriptions = Follow.objects.filter(user=user)
         authors = [item.author.id for item in subscriptions]
@@ -62,11 +64,12 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         return self.get_paginated_response(serializer.data)
 
     @action(
-        methods=["get"],
+        methods=['get'],
         detail=False,
         permission_classes=(IsAuthenticated,),
     )
     def me(self, request):
+        """Просмотр страницы пользователя."""
         if request.user.is_anonymous:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         serializer = CustomUserSerializer(request.user)

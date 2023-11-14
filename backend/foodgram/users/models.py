@@ -13,37 +13,45 @@ class CustomUser(AbstractUser):
         max_length=254,
         unique=True,
         null=False,
-        verbose_name="Адрес электронной почты"
+        verbose_name='Адрес электронной почты'
     )
 
     username = models.CharField(
         max_length=150,
         unique=True,
         null=False,
-        verbose_name="Уникальный юзернейм",
+        verbose_name='Уникальный юзернейм',
         validators=[
             RegexValidator(
                 regex=r"^[\w.@+-]+",
-                message="Допустимые символы: буквы, цифры и @/./+/-",
+                message='Допустимые символы: буквы, цифры и @/./+/-',
             )
         ],
     )
 
     first_name = models.CharField(
-        blank=True, max_length=150, verbose_name="Имя"
+        blank=True,
+        max_length=150,
+        verbose_name='Имя'
     )
 
     last_name = models.CharField(
-        blank=True, max_length=150, verbose_name="Фамилия"
+        blank=True,
+        max_length=150,
+        verbose_name='Фамилия'
     )
 
     password = models.CharField(
-        blank=False, null=False, max_length=150, verbose_name="Пароль"
+        blank=False,
+        null=False,
+        max_length=150,
+        verbose_name='Пароль'
     )
 
     class Meta:
-        verbose_name = "Пользователь"
-        verbose_name_plural = "Пользователи"
+        ordering = ('username',)
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
     def __str__(self) -> str:
         return self.username
@@ -64,9 +72,15 @@ class Follow(models.Model):
         verbose_name='Автор')
 
     class Meta:
+        ordering = ('user',)
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
         constraints = (
             models.UniqueConstraint(
                 fields=['user', 'author'],
                 name='unique_follow'
             ),
         )
+
+    def __str__(self):
+        return f'Пользователь {self.user} подписан на {self.author}'

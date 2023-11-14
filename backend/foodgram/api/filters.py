@@ -5,7 +5,7 @@ from recipes.models import Recipe, Tag
 
 
 class RecipeFilter(django_filters.FilterSet):
-
+    """Фильтры для рецептов."""
     tags = django_filters.filters.ModelMultipleChoiceFilter(
         queryset=Tag.objects.all(),
         field_name='tags__slug',
@@ -17,12 +17,14 @@ class RecipeFilter(django_filters.FilterSet):
         method='shopping_cart_filter')
 
     def fav_filter(self, queryset, name, value):
+        """Фильтрация рецептов из избранного."""
         if value == 1:
             user = self.request.user
             return queryset.filter(fav_recipe__user=user.id)
         return queryset
 
     def shopping_cart_filter(self, queryset, name, value):
+        """Фильтрация рецептов из списка покупок."""
         if value == 1:
             user = self.request.user
             return queryset.filter(cart_recipe__user=user.id)
@@ -34,4 +36,5 @@ class RecipeFilter(django_filters.FilterSet):
 
 
 class IngredientFilter(rest_framework.filters.SearchFilter):
+    """Фильтр для поиска по ингредиентам."""
     search_param = 'name'
