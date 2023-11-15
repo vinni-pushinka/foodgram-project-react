@@ -18,7 +18,8 @@
  - описание процедуры приготовления
  - изображение готового блюда
 
- Проект доступен по ссылке: vinnifoodgram.myftp.org
+### Ссылка: 
+Проект доступен по ссылке: vinnifoodgram.myftp.org
 
 ### Технологии:
 Python, Django, Django REST Framework, JWT, SQLite3.
