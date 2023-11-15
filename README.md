@@ -24,7 +24,7 @@
 Проект доступен по ссылке: vinnifoodgram.myftp.org
 
 ### Технологии:
-Python, Django, Django REST Framework, JWT, SQLite3.
+Python, Django, Django REST Framework, JWT, SQLite3, PostgreSQL.
 
 ### Как запустить проект:
 1. Клонировать репозиторий:
