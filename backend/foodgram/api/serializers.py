@@ -1,13 +1,11 @@
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers, status
-from rest_framework.validators import (
-    UniqueTogetherValidator, ValidationError)
+from rest_framework.validators import UniqueTogetherValidator, ValidationError
 
 from recipes.models import (Favorite, Ingredient, Recipe, RecipeIngredient,
                             ShoppingCart, Tag)
 from users.models import CustomUser, Follow
 from users.serializers import CustomUserSerializer
-
 
 MIN_VALUE = 1
 MAX_VALUE = 32_000

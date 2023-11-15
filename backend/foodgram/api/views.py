@@ -9,8 +9,8 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from api.filters import IngredientFilter, RecipeFilter
-from api.permissions import IsAuthorOrReadOnly
 from api.pagination import CustomPaginator
+from api.permissions import IsAuthorOrReadOnly
 from api.serializers import (FavoriteSerializer, IngredientSerializer,
                              RecipeCreateSerializer, RecipeSerializer,
                              ShoppingCartSerializer, TagSerializer)
