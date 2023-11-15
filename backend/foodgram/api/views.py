@@ -18,11 +18,6 @@ from recipes.models import (Favorite, Ingredient, Recipe, RecipeIngredient,
                             ShoppingCart, Tag)
 
 
-def index(request):
-    """Просмотр главной страницы сайта."""
-    return HttpResponse('index')
-
-
 class TagViewSet(ModelViewSet):
     """Вьюсет модели тега."""
     queryset = Tag.objects.all()
@@ -122,7 +117,7 @@ class RecipeViewSet(ModelViewSet):
     )
     def download_shopping_cart(self, request):
         """Загрузка списка покупок."""
-        shopping_cart = ShoppingCart.objects.filter(user=request.user)
+        shopping_cart = request.user.cart_user.all()
         recipes = shopping_cart.values_list('recipe', flat=True)
         shopping_list = RecipeIngredient.objects.filter(
             recipe__in=recipes).values(
